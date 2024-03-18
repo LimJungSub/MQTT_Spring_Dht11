@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>mainControllView - 컨트롤러에서 정상적 리턴시 보이는 페이지</h2>
+<br>
+<!--기본적으로 구성해야할 것:-->
+<!--폼을 띄워서 http 요청을 mqtt요청으로 변환 (웹으로 입력하니까), 음 근데 프론트->서버로 json으로 데이터 전송하는 경우가 흔한가?ㅇㅇ...-->
+<!--근데 더 간지나게 전송하는 방법은 없는가...-->
+
+<b>입력하세요.</b>
+<br>
+<form method="post">
+    온도:<textarea></textarea>
+    습도:<textarea></textarea>
+    <button type="submit" >기록</button>
+</form>
+</body>
+</html>
+
+<script>
+    //submit 버튼이 눌리면 이벤트리스너로 잡는다.
+    const formElement = document.querySelector('form');
+    formElement.addEventListener('submit', function (e) {
+        e.preventDefault(); // 폼의 기본 제출 동작을 방지
+        console.log("[EventListener's Operating]"); //확인
+        const formData = new FormData(formElement);
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
+        fetch('/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonObject),
+        })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch((error) => console.error('Error:', error));
+    });
+</script>

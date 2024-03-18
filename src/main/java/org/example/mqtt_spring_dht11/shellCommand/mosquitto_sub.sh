@@ -1,4 +1,4 @@
 #!/bin/zsh
 
 echo startCommandSub
-mosquitto_sub -t SpringIot -p 1883
+mosquitto_sub -t webIot -p 1883
